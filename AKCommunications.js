@@ -110,21 +110,31 @@ var communication = {
 		LaunchURL(url);
 	},
 
-	text: function(phoneNumber) {
-		if(arguments.length > 1) {
-			console.log('you supplied too many arguments. You can either supply 0 or 1');
+	text(phoneNumber = null, body = null) {
+		if(arguments.length > 2) {
+			console.log('you supplied too many arguments. You can either supply 0 or 1 or 2');
 			return;
 		}
 
 		var url = 'sms:';
 
-		if(arguments.length !== 0) {
+		if(phoneNumber) {
 			if(isCorrectType('String', phoneNumber)) {
 				url += phoneNumber;
 			} else {
 				console.log('the phone number should be provided as a string. It was provided as ' 
 					+ Object.prototype.toString.call(phoneNumber).slice(8, -1) 
 					+ ',ignoring the value provided');
+			}
+		}
+
+		if(body) {
+			if(isCorrectType('String', body)) {
+					url += `&body=${body}`;
+				} else {
+					console.log('the body should be provided as a string. It was provided as '
+						+ Object.prototype.toString.call(body).slice(8, -1)
+						+ ',ignoring the value provided');
 			}
 		}
 
